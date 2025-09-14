@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Telemedicine Registration</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-image: url("doctor4.jpg");
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 108vh;
+      margin: 0;
+      background-size: cover;
+
+    }
+    .container {
+      background:none;
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      width: 420px;
+      animation: fadeIn 0.6s ease-in-out;
+      backdrop-filter: blur(12px); /* blur background */
+     
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    .tabs {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 25px;
+    }
+    .tab {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 12px;
+      margin: 0 6px;
+      background: #f1f3f6;
+      transition: all 0.3s ease;
+    }
+    .tab:hover {
+      background: #e1e5ec;
+    }
+    .tab.active {
+      background: linear-gradient(135deg, #e9bd76, #38bbef);
+      color: white;
+      box-shadow: 0 4px 8px rgba(78,115,223,0.3);
+    }
+    form {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+    #patientForm h3{
+        color: #f1f3f6;
+    }
+    #doctorForm h3{
+        color: #f1f3f6;
+    }
+    form.active {
+      display: block;
+    }
+    h3 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      color: #dad3d3;
+    }
+    
+    input, select {
+      width: 25rem;
+      padding: 12px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      background-color: transparent;
+      color: #ddd6d6;
+    }
+    select{
+        width: 26.5rem;
+    }
+    input:focus, select:focus {
+      border-color: #b4c5f7;
+      outline: none;
+      box-shadow: 0 0 6px rgba(161, 182, 242, 0.4);
+    }
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #e9bd76, #38bbef);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease 0.3s ease;
+    }
+    button:active {
+      background: #e4d290;
+      transform: translateY(-2px);
+    }
+    button:active {
+      transform: translateY(2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="tabs">
+      <div class="tab" id="patientTab">Patient</div>
+      <div class="tab" id="doctorTab">Doctor</div>
+    </div>
+
+    <!-- Patient Form -->
+    <form id="patientForm">
+      <h3>Patient Registration</h3>
+      <label>Username</label>
+      <input type="text" id="p_username" required>
+      <label>Email</label>
+      <input type="email" id="p_email" required>
+      <label>Phone Number</label>
+      <input type="tel" id="p_phone" required>
+      <label>Gender</label>
+      <select id="p_gender" required>
+        <option value="">Select</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+      </select>
+      <label>Password</label>
+      <input type="password" id="p_password" required>
+       <a href="C:\Users\Pritam Saha\OneDrive\Desktop\tel system\patient.html"><button type="submit">Register</button></a>
+    </form>
+
+    <!-- Doctor Form -->
+    <form id="doctorForm">
+      <h3>Doctor Registration</h3>
+      <label>Username</label>
+      <input type="text" id="d_username" required>
+      <label>Email</label>
+      <input type="email" id="d_email" required>
+      <label>Phone Number</label>
+      <input type="tel" id="d_phone" required>
+      <label>Gender</label>
+      <select id="d_gender" required>
+        <option value="">Select</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+      </select>
+      <label>Password</label>
+      <input type="password" id="d_password" required>
+      <label>Specialization</label>
+      <input type="text" id="d_specialization" required>
+     
+     <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script  src="./register.js">
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+ body {
+        font-family: Arial, sans-serif;
+       background-image: linear-gradient(white,rgb(231, 85, 148));
+        margin: 0;
+        padding: 0;
+        background-size: cover;
+        height: 100vh;
+    }
+    header {
+        background: linear-gradient(to right, #a8dfd9, #96c93d);
+
+        padding: 15px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        color: rgb(255, 255, 255);
+        backdrop-filter: blur(5px);
+    }
+    .container{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    .container div{
+        height: 265px;
+        width: 190px;
+        border-radius: 7px;
+        background-color: rgb(248, 244, 244);
+        margin-top: 120px;
+    }
+    .container div h3{
+        margin-top: 215px;
+        margin-left: 25px;
+        font-size: 15px;
+        color: black;
+    }
+   .bg1{
+    width: 200px;
+    height: 150px;
+    overflow: visible; /* hides overflow if image is larger */
+    border-radius: 10px;
+}
+
+.bg1 img {
+    width: 170px;
+    height: 320px;
+    object-fit: contain;
+    margin-top: -400px;
+    margin-left: 10px; /* cover or contain */
+   transition: transform 0.3s
+}
+.bg2 img {
+    width: 170px;
+    height: 350px;
+    object-fit: contain;
+    margin-top: -400px;
+    margin-left: 10px; /* cover or contain */
+    transition: transform 0.3s ease
+}
+.bg1:hover{
+    transform: translateY(-5px);
+}
+.bg2:hover{
+     transform:  translateY(-5px);
+}
+  footer {
+    background: rgb(0, 0, 0);
+    color: #fff;
+    padding: 30px 20px 10px 20px;
+    text-align: center;
+    margin-top: 60px;
+  }
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
+}
+
+.footer-section h4 {
+    margin-bottom: 10px;
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #ccc;
+}

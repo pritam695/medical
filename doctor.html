@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Doctor Dashboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: #f0f2f5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #00695c;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    header h1 {
+      font-weight: 700;
+      font-size: 1.5rem;
+      user-select: none;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #aacdc9, #0ad9c4);
+      padding: 3rem 2rem;
+      text-align: center;
+      color: white;
+      box-shadow: inset 0 0 50px rgba(0,0,0,0.1);
+    }
+
+    .hero h2 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      font-weight: 300;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      padding: 3rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto 3rem auto;
+    }
+
+    .grid-item {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+      text-align: center;
+      user-select: none;
+    }
+
+    .grid-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .grid-item h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      color: #00796b;
+    }
+
+    .grid-item p {
+      font-size: 1rem;
+      color: #555;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 10px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2rem;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .modal-content h3 {
+      margin-bottom: 1rem;
+      color: #004d40;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #004d40;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      line-height: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .appointment-list, .history-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .appointment-list li, .history-list li {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #ddd;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    .consult-form textarea {
+      width: 100%;
+      height: 120px;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      resize: vertical;
+      margin-bottom: 1rem;
+      font-family: inherit;
+    }
+
+    .consult-form button, .upload-section button {
+      background: #00796b;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .consult-form button:hover, .upload-section button:hover {
+      background: #004d40;
+    }
+
+    footer {
+      background: #004d40;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Doctor Dashboard</h1>
+  </header>
+
+  <section class="hero">
+    <h2>Welcome, Doctor</h2>
+    <p>Manage your appointments, patients, prescriptions, and medical history all in one place.</p>
+  </section>
+
+  <main>
+    <section class="grid-container">
+      <article class="grid-item" id="view-appointment">
+        <h3>View Appointment</h3>
+        <p>Check your upcoming patient appointments and schedule new ones.</p>
+      </article>
+
+      <article class="grid-item" id="consult-patient">
+        <h3>Consult Patient</h3>
+        <p>Access patient details and provide consultations remotely or in-person.</p>
+      </article>
+
+      <article class="grid-item" id="upload-prescription">
+        <h3>Upload Prescription</h3>
+        <p>Upload and manage prescriptions for your patients securely.</p>
+      </article>
+
+      <article class="grid-item" id="view-medical-history">
+        <h3>View Medical History</h3>
+        <p>Review patient medical records and history to provide better care.</p>
+      </article>
+    </section>
+  </main>
+
+  <!-- Modals -->
+  <div class="modal" id="modal-appointment">
+    <div class="modal-content">
+      <button class="close-btn">&times;</button>
+      <h3>Upcoming Appointments</h3>
+      <ul class="appointment-list" id="appointment-list"></ul>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-consult">
+    <div class="modal-content">
+      <button class="close-btn">&times;</button>
+      <h3>Consult Patient</h3>
+      <form class="consult-form" id="consult-form">
+        <textarea id="consult-notes" placeholder="Enter consultation notes..." required></textarea>
+        <button type="submit">Save Consultation</button>
+      </form>
+      <div id="consult-message" style="margin-top:1rem; color:green; display:none;">Consultation saved!</div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-upload">
+    <div class="modal-content">
+      <button class="close-btn">&times;</button>
+      <h3>Upload Prescription</h3>
+      <form class="upload-section" id="upload-form">
+        <input type="file" id="prescription-file" accept=".pdf,.jpg,.jpeg,.png" required />
+        <button type="submit">Upload</button>
+      </form>
+      <div id="upload-message" style="margin-top:1rem; color:green; display:none;">Prescription uploaded successfully!</div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-history">
+    <div class="modal-content">
+      <button class="close-btn">&times;</button>
+      <h3>Medical History</h3>
+      <ul class="history-list" id="history-list"></ul>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Doctor Dashboard. All rights reserved.
+  </footer>
+
+  <script src="./doctor.js">
+    
+  </script>
+</body>
+</html>

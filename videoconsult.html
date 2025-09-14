@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Consultation - HealthCare Clinic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Arial', sans-serif;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .video-container {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .video-container:hover .video-overlay {
+            opacity: 1;
+        }
+        .controls {
+            display: flex;
+            gap: 15px;
+        }
+        .btn-control {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+        .btn-control:hover {
+            transform: scale(1.1);
+        }
+        .btn-control.btn-muted {
+            background-color: #ccc;
+        }
+        .consultation-form {
+            max-width: 600px;
+        }
+        .history-section {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        #callEnded {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            z-index: 10;
+        }
+        #callEnded.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4">
+    <div class="container mx-auto max-w-6xl">
+        <h1 class="text-4xl font-bold text-center mb-8 text-gray-800 fade-in">
+            <i class="fas fa-video mr-2"></i>Video Consultation Portal
+        </h1>
+
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Video Section -->
+            <div class="flex-1">
+                <div id="formSection">
+                    <div class="bg-white rounded-xl shadow-lg p-6 fade-in consultation-form">
+                        <h2 class="text-2xl font-bold mb-6 text-gray-800">Start Consultation</h2>
+                        <form id="consultationForm">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-gray-700 font-semibold mb-1">Patient Name</label>
+                                    <input type="text" id="patientName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 font-semibold mb-1">Select Doctor</label>
+                                    <select id="doctorSelect" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                                        <option value="">Choose Doctor</option>
+                                        <option value="Dr. Emily Carter">Dr. Emily Carter (Cardiology)</option>
+                                        <option value="Dr. Marcus Johnson">Dr. Marcus Johnson (Neurology)</option>
+                                        <option value="Dr. Sophia Lee">Dr. Sophia Lee (Pediatrics)</option>
+                                        <option value="Dr. David Patel">Dr. David Patel (Orthopedics)</option>
+                                        <option value="Dr. Olivia Garcia">Dr. Olivia Garcia (Dermatology)</option>
+                                        <option value="Dr. Liam Wilson">Dr. Liam Wilson (Oncology)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 font-semibold mb-1">Consultation Date</label>
+                                    <input type="date" id="consultDate" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 font-semibold mb-1">Consultation Time</label>
+                                    <input type="time" id="consultTime" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 font-semibold mb-1">Symptoms/Reason</label>
+                                <textarea id="symptoms" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 h-24" placeholder="Describe your symptoms or reason for consultation..." required></textarea>
+                            </div>
+                            <button type="submit" class="w-full p-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700">
+                                Start Video Consultation
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="videoSection" class="mt-8" style="display: none;">
+                    <div class="video-container">
+                        <video id="videoStream" autoplay muted class="w-full h-64 lg:h-96 object-cover"></video>
+                        <div class="video-overlay">
+                            <div class="controls">
+                                <button id="toggleVideo" class="btn-control bg-white text-black">
+                                    <i class="fas fa-video"></i>
+                                </button>
+                                <button id="toggleAudio" class="btn-control bg-white text-black">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                                <button id="endCall" class="btn-control bg-red-600 text-white">
+                                    <i class="fas fa-phone-slash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="callEnded" class="absolute inset-0 flex justify-center items-center opacity-0 transition-opacity duration-500" style="z-index: 10;">
+                            <div class="text-center">
+                                <i class="fas fa-check-circle text-4xl mb-2 text-green-500"></i>
+                                <p class="text-lg font-semibold">Consultation Ended Successfully</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Section -->
+            <div class="lg:w-1/3">
+                <div class="bg-white rounded-xl shadow-lg p-6 fade-in history-section">
+                    <h2 class="text-xl font-bold mb-4 text-gray-800">
+                        <i class="fas fa-history mr-2"></i>Consultation History
+                    </h2>
+                    <div id="historyList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./video.js">
+       
+    </script>
+</body>
+</html>
+</content>
+</create_file>
